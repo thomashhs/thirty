@@ -1,0 +1,40 @@
+{% extends "users/base.html" %}
+
+{% block head_content %}
+<link href="/static/css/starter-template.css" rel="stylesheet">
+<link href="/static/css/landing.css" rel="stylesheet">
+{% endblock %}
+
+{% block body_content %}
+    <nav class="navbar">
+    </nav>
+
+    <div class="lp-product-line">
+        <div class="container">
+        <div class="row text-center">
+
+        {% for tool in tool_list %}
+            {% if tool.visible %}
+            <div class="col-md-3 lp-product-line-box">
+            <a href="{% url 'users:toolname' tool.name  %}">
+                <div class="lp-product-line-box-content lp-api">
+                    <h4>{{ tool.title }}</h4>
+                    <p class="lp-product-line-off">{{ tool.desc }}</p>
+                    <span class="lp-product-line-hover">立即前往</span>
+                </div>
+            </a>
+            </div>
+            {% endif %}
+        {% empty %}
+        {% endfor %}
+
+        </div>
+
+
+
+        </div>
+
+
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "users/base.html" %}
+{% load crispy_forms_tags %}
+{% load account %}
+
+{% user_display confirmation.email_address.user as user_display %}
+
+{% block head_content %}
+<link href="/static/css/starter-template.css" rel="stylesheet">
+<link href="/static/css/landing.css" rel="stylesheet">
+{% endblock %}
+
+{% block body_content %}
+    <div class="container">
+        <div class="col-md-4 col-md-offset-4 col-xs-8 col-xs-offset-2">
+         <br><br><br>
+         <div class="text-center">
+         <h3>验证您的E-mail地址</h3>
+
+         </div>
+
+
+
+            <div class="text-center">
+                <hr>
+            <span>点击e-mail中的链接完成注册流程。如果您在几分钟后仍未收到邮件，请与我们联系。</span>
+            </div>
+
+        </div><!-- /.container --></div>
+
+{% endblock %}
+
+
+
+
+

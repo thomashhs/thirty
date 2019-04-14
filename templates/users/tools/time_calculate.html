@@ -1,0 +1,194 @@
+{% extends "users/base.html" %}
+
+{% block head_content %}
+<link href="/static/css/starter-template.css" rel="stylesheet">
+<link href="/static/css/landing.css" rel="stylesheet">
+
+<script type="text/javascript">
+
+    function cala(){
+
+
+        var year1 = document.getElementById('SY2').value;
+        var month1 = document.getElementById('SM2').value;
+        var day1 = document.getElementById('SD2').value;
+        var date1 = new Date()
+        date1.setFullYear(year1,month1-1,day1)
+
+        var year2 = document.getElementById('SY3').value;
+        var month2 = document.getElementById('SM3').value;
+        var day2 = document.getElementById('SD3').value;
+        var date2 = new Date()
+        date2.setFullYear(year2,month2-1,day2)
+
+        var days = date2-date1
+        var time = parseInt(days / (1000 * 60 * 60 * 24));
+        document.getElementById("result2").innerHTML = time+'天';
+
+    }
+
+    function calb(){
+
+        var year1 = document.getElementById('SY').value;
+        var month1 = document.getElementById('SM').value;
+        var day1 = document.getElementById('SD').value;
+        var days = document.getElementById('decday').value;
+        var date1 = new Date();
+        date1.setFullYear(year1,month1-1,day1);
+        date1.setDate(date1.getDate()+parseInt(days));
+        var format1=date1.getFullYear()+'年'+(date1.getMonth()+1)+'月'+date1.getDate()+'日'+'星期'+'日一二三四五六'.charAt(date1.getDay());
+        document.getElementById("result1").innerHTML = format1;
+    }
+
+
+</script>
+
+{% endblock %}
+
+{% block body_content %}
+
+    <nav class="navbar">
+    </nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-9">
+
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li>
+                    <a href="{% url 'users:index' %}">首页</a>
+                </li>
+                <li >
+                    <a href="{% url 'users:tools' %}">在线工具</a>
+                </li>
+                <li class="active">日期计算</li>
+            </ol>
+        </nav>
+
+        <div class="center-block" >
+
+        <form class="form-inline">
+        <div class="form-group">
+        <label for="SY2">年</label>
+        <input type="text" class="form-control" id="SY2" placeholder="YYYY">
+        </div>
+
+        <div class="form-group">
+        <label for="SM2">月</label>
+        <input type="text" class="form-control" id="SM2" placeholder="MM">
+        </div>
+
+        <div class="form-group">
+        <label for="SD2">日</label>
+        <input type="text" class="form-control" id="SD2" placeholder="DD">
+        </div>
+
+        </form>
+        <br>
+
+        <form class="form-inline">
+        <div class="form-group">
+        <label for="SY3">年</label>
+        <input type="text" class="form-control" id="SY3" placeholder="YYYY">
+        </div>
+
+        <div class="form-group">
+        <label for="SM3">月</label>
+        <input type="text" class="form-control" id="SM3" placeholder="MM">
+        </div>
+
+        <div class="form-group">
+        <label for="SD3">日</label>
+        <input type="text" class="form-control" id="SD3" placeholder="DD">
+        </div>
+
+        </form>
+        <br>
+        <button type="submit" class="btn btn-default" onclick="cala()">相差</button>
+        <span id="result2"></span>
+
+
+        <br><br>
+
+        <form class="form-inline">
+        <div class="form-group">
+        <label for="SY">年</label>
+        <input type="text" class="form-control" id="SY" placeholder="YYYY">
+        </div>
+
+        <div class="form-group">
+        <label for="SM">月</label>
+        <input type="text" class="form-control" id="SM" placeholder="MM">
+        </div>
+
+        <div class="form-group">
+        <label for="SD">日</label>
+        <input type="text" class="form-control" id="SD" placeholder="DD">
+        </div>
+
+        </form>
+        <br>
+        <form class="form-inline">
+        <div class="form-group" >
+        <label for="decday">往后</label>
+        <input type="text" class="form-control" id="decday" placeholder="XX" name="decday"><label>天（输入负数则往前计算）</label>
+        </div></form>
+        <br>
+        <button type="submit" class="btn btn-default" onclick="calb()">计 算</button>
+        <span id="result1"></span>
+
+
+        </div>
+        </div>
+
+
+        <div class="col-lg-3">
+
+            <div class="panel-group">
+            <!-- 第一个功能 -->
+            <div class="panel panel-default">
+                <!-- 折叠panel头部 -->
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                    <a href="#" data-toggle="collapse" data-target="#chanel_demo1">技术文档链接</a>
+                    </h4>
+                </div>
+                <!-- 折叠panel内容 -->
+                <div class="collapse in panel-collapse" id="chanel_demo1">
+                    <ul class="list-group">
+                        <li class="list-group-item"><a href="#"> >> Django文档</a></li>
+                        <li class="list-group-item"><a href="#"> >> Boottrap4文档</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var today=new Date();
+    year1=today.getFullYear();
+    month1=today.getMonth()+1;
+    day1=today.getDate()
+
+    document.getElementById('SY2').value=year1
+    document.getElementById('SM2').value=month1
+    document.getElementById('SD2').value=day1
+
+    document.getElementById('SY3').value=year1+1
+    document.getElementById('SM3').value=month1
+    document.getElementById('SD3').value=day1
+
+    document.getElementById('SY').value=year1
+    document.getElementById('SM').value=month1
+    document.getElementById('SD').value=day1
+    document.getElementById('decday').value=1
+</script>
+
+{% endblock %}
+

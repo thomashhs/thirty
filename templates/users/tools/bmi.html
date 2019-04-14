@@ -1,0 +1,100 @@
+{% extends "users/base.html" %}
+
+{% block head_content %}
+<link href="/static/css/starter-template.css" rel="stylesheet">
+<link href="/static/css/landing.css" rel="stylesheet">
+
+<script type="text/javascript">
+    function cal(){
+        var bmi_height = document.getElementById('bmi_height').value/100;
+        var bmi_weight = document.getElementById('bmi_weight').value;
+
+        var bmi_result = bmi_weight / (bmi_height * bmi_height);
+        bmi_result=Math.round(bmi_result*100)/100;
+        document.getElementById("bmi_result").value = bmi_result;
+    }
+</script>
+
+{% endblock %}
+
+{% block body_content %}
+
+    <nav class="navbar">
+    </nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-9">
+
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li>
+                    <a href="{% url 'users:index' %}">首页</a>
+                </li>
+                <li >
+                    <a href="{% url 'users:tools' %}">在线工具</a>
+                </li>
+                <li class="active">复利计算</li>
+            </ol>
+        </nav>
+
+        <div class="center-block" style="width:300px">
+
+        <div class="form-group">
+        <label for="bmi_height">身高</label>
+        <input type="text" class="form-control" id="bmi_height" placeholder="单位（厘米）">
+        </div>
+
+        <div class="form-group">
+        <label for="bmi_weight">体重</label>
+        <input type="text" class="form-control" id="bmi_weight" placeholder="单位（公斤）">
+        </div>
+
+        <div class="form-group">
+        <label for="bmi_result">BMI指数</label>
+        <input type="text" class="form-control" id="bmi_result" placeholder="计算结果" disabled>
+        </div>
+
+        <div class="form-group">
+        <label for="bmi_conclusion">参照值</label>
+        <textarea class="form-control" rows="8" id="bmi_conclusion" placeholder="过轻：低于18.5
+正常：18.5-23.9
+过重：24-27
+肥胖：28-32
+非常肥胖, 高于32" disabled></textarea>
+        </div>
+
+            <button type="submit" class="btn btn-default" onclick="cal()">提交</button>
+
+        </div>
+        </div>
+
+
+        <div class="col-lg-3">
+
+            <div class="panel-group">
+            <!-- 第一个功能 -->
+            <div class="panel panel-default">
+                <!-- 折叠panel头部 -->
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                    <a href="#" data-toggle="collapse" data-target="#chanel_demo1">技术文档链接</a>
+                    </h4>
+                </div>
+                <!-- 折叠panel内容 -->
+                <div class="collapse in panel-collapse" id="chanel_demo1">
+                    <ul class="list-group">
+                        <li class="list-group-item"><a href="#"> >> Django文档</a></li>
+                        <li class="list-group-item"><a href="#"> >> Boottrap4文档</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

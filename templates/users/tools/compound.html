@@ -1,0 +1,107 @@
+{% extends "users/base.html" %}
+
+{% block head_content %}
+<link href="/static/css/starter-template.css" rel="stylesheet">
+<link href="/static/css/landing.css" rel="stylesheet">
+
+<script type="text/javascript">
+    function cal(){
+        var base_money = document.getElementById('base_money').value;
+        var base_rate = document.getElementById('base_rate').value/100;
+        var base_year = document.getElementById('base_year').value;
+
+        result_money = base_money * Math.pow((1 + base_rate), base_year);
+
+        result_interest = result_money - base_money;
+
+        result_money=Math.round(result_money*100)/100;
+        document.getElementById("result_money").value = result_money;
+        result_interest=Math.round(result_interest*100)/100;
+        document.getElementById("result_interest").value = result_interest;
+    }
+</script>
+
+{% endblock %}
+
+{% block body_content %}
+
+    <nav class="navbar">
+    </nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-9">
+
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li>
+                    <a href="{% url 'users:index' %}">首页</a>
+                </li>
+                <li >
+                    <a href="{% url 'users:tools' %}">在线工具</a>
+                </li>
+                <li class="active">复利计算</li>
+            </ol>
+        </nav>
+
+        <div class="center-block" style="width:300px">
+
+        <div class="form-group">
+        <label for="base_money">本金</label>
+        <input type="text" class="form-control" id="base_money" placeholder="单位（元）">
+        </div>
+
+        <div class="form-group">
+        <label for="base_rate">年利率</label>
+        <input type="text" class="form-control" id="base_rate" placeholder="单位（%）">
+        </div>
+
+        <div class="form-group">
+        <label for="base_year">年期</label>
+        <input type="text" class="form-control" id="base_year" placeholder="单位（年）">
+        </div>
+
+        <div class="form-group">
+        <label for="result_money">本息合计</label>
+        <input type="text" class="form-control" id="result_money" placeholder="计算结果" disabled>
+        </div>
+
+        <div class="form-group">
+        <label for="result_interest">其中利息</label>
+        <input type="text" class="form-control" id="result_interest" placeholder="计算结果" disabled>
+        </div>
+
+            <button type="submit" class="btn btn-default" onclick="cal()">提交</button>
+
+        </div>
+        </div>
+
+
+        <div class="col-lg-3">
+
+            <div class="panel-group">
+            <!-- 第一个功能 -->
+            <div class="panel panel-default">
+                <!-- 折叠panel头部 -->
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                    <a href="#" data-toggle="collapse" data-target="#chanel_demo1">技术文档链接</a>
+                    </h4>
+                </div>
+                <!-- 折叠panel内容 -->
+                <div class="collapse in panel-collapse" id="chanel_demo1">
+                    <ul class="list-group">
+                        <li class="list-group-item"><a href="#"> >> Django文档</a></li>
+                        <li class="list-group-item"><a href="#"> >> Boottrap4文档</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

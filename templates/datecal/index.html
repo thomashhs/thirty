@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script type="text/javascript">
+
+
+    function cala(){
+
+
+        var year1 = document.getElementById('SY2').value;
+        var month1 = document.getElementById('SM2').value;
+        var day1 = document.getElementById('SD2').value;
+        var date1 = new Date()
+        date1.setFullYear(year1,month1-1,day1)
+
+        var year2 = document.getElementById('SY3').value;
+        var month2 = document.getElementById('SM3').value;
+        var day2 = document.getElementById('SD3').value;
+        var date2 = new Date()
+        date2.setFullYear(year2,month2-1,day2)
+
+        var days = date2-date1
+        var time = parseInt(days / (1000 * 60 * 60 * 24));
+        document.getElementById("result2").innerHTML = time+'天';
+
+    }
+
+    function calb(){
+
+        var year1 = document.getElementById('SY').value;
+        var month1 = document.getElementById('SM').value;
+        var day1 = document.getElementById('SD').value;
+        var days = document.getElementById('decday').value;
+        var date1 = new Date();
+        date1.setFullYear(year1,month1-1,day1);
+        date1.setDate(date1.getDate()+parseInt(days));
+        var format1=date1.getFullYear()+'年'+(date1.getMonth()+1)+'月'+date1.getDate()+'日'+'星期'+'日一二三四五六'.charAt(date1.getDay());
+        document.getElementById("result1").innerHTML = format1;
+    }
+    </script>
+</head>
+<body>
+
+<div>
+<big>日期计算</big>
+</div>
+
+
+
+<b>计算两个日期之间差多少天</b>
+<br>
+
+　　<input size="6" id="SY2">年
+    <input size="3" id="SM2">月
+    <input size="3" id="SD2">日（默认今天）
+<br>
+距　<input size="6" id="SY3">年
+    <input size="3" id="SM3">月
+    <input size="3" id="SD3">日（默认明年）
+
+<br>
+　　<input type="button" value="相 差" onclick="cala()">
+    <span id="result2"></span>
+
+<br>
+<br>
+<b>推算几天后的日期</b>
+<br>
+　　<input size="6" id="SY" name="SY">年
+    <input size="3" id="SM" name="SM">月
+    <input size="3" id="SD" name="SD">日（默认今天）
+    <br>往后<input size="6" id="decday" value="100" name="decday">天（输入负数则往前计算）
+
+<br>
+　　<input type="button" value="计 算" onclick="calb()">
+是：<span id="result1"></span>
+
+</body>
+
+<script type="text/javascript">
+    var today=new Date();
+    year1=today.getFullYear();
+    month1=today.getMonth()+1;
+    day1=today.getDate()
+
+    document.getElementById('SY2').value=year1
+    document.getElementById('SM2').value=month1
+    document.getElementById('SD2').value=day1
+
+    document.getElementById('SY3').value=year1+1
+    document.getElementById('SM3').value=month1
+    document.getElementById('SD3').value=day1
+
+    document.getElementById('SY').value=year1
+    document.getElementById('SM').value=month1
+    document.getElementById('SD').value=day1
+    document.getElementById('decday').value=1
+</script>
+
+</html>

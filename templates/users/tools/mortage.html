@@ -1,0 +1,180 @@
+{% extends "users/base.html" %}
+
+{% block head_content %}
+<link href="/static/css/starter-template.css" rel="stylesheet">
+<link href="/static/css/landing.css" rel="stylesheet">
+
+<script type="text/javascript">
+    function cal()
+    {
+        var loan_type=document.getElementsByName('loan_type');
+        var loan_money=Number(document.getElementById('loan_money').value);
+        var loan_rate=Number(document.getElementById('loan_rate').value)/100/12;
+        var loan_year=Number(document.getElementById('loan_year').value);
+        var result_month = loan_year * 12;
+
+        for(var i=0;i<loan_type.length;i++){
+            if(loan_type[i].checked){
+                //等额本息
+                if(loan_type[i].value=='option1'){
+                    //计算
+                    var result_avg_money=(loan_money * loan_rate * Math.pow(1 + loan_rate, result_month)) / (
+                    Math.pow(1 + loan_rate, result_month) - 1);
+                    var result_total_money = result_avg_money * result_month;
+                    var result_interest = result_total_money - loan_money;
+                    //填充结果
+
+                    //贷款月数
+                    document.getElementById("result_month").value = result_month;
+                    //月均还款
+                    result_avg_money=Math.round(result_avg_money*100)/100;
+                    document.getElementById("result_avg_money").value = result_avg_money;
+                    //还款总额
+                    result_total_money=Math.round(result_total_money*100)/100;
+                    document.getElementById("result_total_money").value = result_total_money;
+                    //支付利息
+                    result_interest=Math.round(result_interest*100)/100;
+                    document.getElementById("result_interest").value = result_interest;
+                }
+                //等额本金
+                else{
+
+                        var result_avg_money = (loan_money / result_month) + (loan_money * loan_rate);
+                        var result_interest = (1 + result_month) * loan_money * loan_rate / 2;
+                        var result_total_money = (1 + result_month) * loan_money * loan_rate / 2 + loan_money;
+                        var result_descending_money = loan_money / result_month * loan_rate;
+
+                        //填充结果
+
+
+                        //贷款月数
+                          document.getElementById("result_month").value = result_month;
+                        //月均还款
+                          result_avg_money=Math.round(result_avg_money*100)/100;
+                          result_descending_money=Math.round(result_descending_money*100)/100;
+                          var result_avg_money_txt=result_avg_money+'（首月后每月递减'+result_descending_money+'元）';
+                          document.getElementById("result_avg_money").value = result_avg_money_txt;
+
+                        //还款总额
+                          result_total_money=Math.round(result_total_money*100)/100;
+                          document.getElementById("result_total_money").value = result_total_money;
+                        //支付利息
+                          result_interest=Math.round(result_interest*100)/100;
+                          document.getElementById("result_interest").value = result_interest;
+
+                }
+            }
+        }
+
+
+
+
+
+    }
+</script>
+
+{% endblock %}
+
+{% block body_content %}
+
+    <nav class="navbar">
+    </nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-9">
+
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li>
+                    <a href="{% url 'users:index' %}">首页</a>
+                </li>
+                <li >
+                    <a href="{% url 'users:tools' %}">在线工具</a>
+                </li>
+                <li class="active">商业贷款计算</li>
+            </ol>
+        </nav>
+
+        <div class="center-block" style="width:300px">
+
+
+
+        <div class="form-group">
+          <label class="radio-inline">
+            <input type="radio"  value="option1" name="loan_type" checked> 等额本息
+          </label>
+          <label class="radio-inline">
+            <input type="radio"  value="option2" name="loan_type" > 等额本金
+          </label>
+        </div>
+
+        <div class="form-group">
+        <label for="loan_money">贷款总额</label>
+        <input type="text" class="form-control" id="loan_money" placeholder="单位（元）">
+        </div>
+
+        <div class="form-group">
+        <label for="loan_year">贷款年限</label>
+        <input type="text" class="form-control" id="loan_year" placeholder="单位（年）">
+        </div>
+
+        <div class="form-group">
+        <label for="loan_rate">商贷利率</label>
+        <input type="text" class="form-control" id="loan_rate" placeholder="单位（%）">
+        </div>
+
+        <div class="form-group">
+        <label for="result_month">贷款月数</label>
+        <input type="text" class="form-control" id="result_month" placeholder="计算结果" disabled>
+        </div>
+
+        <div class="form-group">
+        <label for="result_avg_money">月均还款</label>
+        <input type="text" class="form-control" id="result_avg_money" placeholder="计算结果" disabled>
+        </div>
+
+        <div class="form-group">
+        <label for="result_total_money">还款总额</label>
+        <input type="text" class="form-control" id="result_total_money" placeholder="计算结果" disabled>
+        </div>
+
+        <div class="form-group">
+        <label for="result_interest">支付利息</label>
+        <input type="text" class="form-control" id="result_interest" placeholder="计算结果" disabled>
+        </div>
+
+            <button type="submit" class="btn btn-default" onclick="cal()">提交</button>
+
+        </div>
+        </div>
+
+
+        <div class="col-lg-3">
+
+            <div class="panel-group">
+            <!-- 第一个功能 -->
+            <div class="panel panel-default">
+                <!-- 折叠panel头部 -->
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                    <a href="#" data-toggle="collapse" data-target="#chanel_demo1">技术文档链接</a>
+                    </h4>
+                </div>
+                <!-- 折叠panel内容 -->
+                <div class="collapse in panel-collapse" id="chanel_demo1">
+                    <ul class="list-group">
+                        <li class="list-group-item"><a href="#"> >> Django文档</a></li>
+                        <li class="list-group-item"><a href="#"> >> Boottrap4文档</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
