@@ -1,7 +1,8 @@
-
 from django.shortcuts import render, redirect
 from .forms import RegisterForm
-from .models import Tools
+from .models import Tools,Logs
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 
 def register(request):
     # 只有当请求为 POST 时，才表示用户提交了注册信息
@@ -37,3 +38,19 @@ def tools(request):
 
 def toolname(request,tool_name):
     return render(request,'users/tools/'+tool_name+'.html')
+
+def about(request):
+    log_list = Logs.objects.order_by('-pub_date')
+    paginator = Paginator(log_list, 2)
+    page = request.GET.get('page')
+
+    try:
+        log_list = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        log_list = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        log_list = paginator.page(paginator.num_pages)
+
+    return render(request,'users/about.html',context={'log_list':log_list})

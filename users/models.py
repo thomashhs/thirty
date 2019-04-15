@@ -17,3 +17,13 @@ class Tools(models.Model):
 
     def __str__(self):
         return self.title
+
+class Logs(models.Model):
+    title = models.CharField(max_length=254)
+    pub_date = models.DateTimeField(auto_now_add=True)
+    desc = models.TextField()
+    is_visible = models.BooleanField()
+    is_left = models.BooleanField()
+
+    def __str__(self):
+        return self.title

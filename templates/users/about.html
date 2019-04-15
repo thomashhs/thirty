@@ -1,0 +1,110 @@
+{% extends "users/base.html" %}
+{% load pagetag %}
+
+
+
+
+{% block head_content %}
+    <link href="/static/css/navbar-static-top.css" rel="stylesheet">
+    <link href="/static/css/landing.css" rel="stylesheet">
+    <link href="/static/css/timeline.css" rel="stylesheet">
+    <script type="text/javascript">
+    function openPage(){
+    var index=parseInt(document.getElementById('pageindex').value);
+    var test=document.getElementById('pageindex').getAttribute("max");
+    //验证输入是否为空
+    if(index==null||index=="")
+    {
+        alert("页码不能为空！");
+        return false;
+    }
+    //验证输入是否为数字
+    if(isNaN(index))
+    {
+        alert("页码必须为数字！");
+        return false;
+    }
+    //对数字进行验证
+    if(index >= 1 && index <= test)
+    {
+        window.location.href="?page="+index;
+    }
+    else
+    {
+        alert('请输入合理页码值：'+'1'+'~'+test)
+        return false;
+    }
+
+    }
+    </script>
+{% endblock %}
+
+
+{% block body_content %}
+
+    <nav class="navbar">
+    </nav>
+
+    <nav style="text-align: center">
+        <div class="pagination form-inline">
+        <ul class="pagination">
+            <li><a href="?page=1">&laquo;</a></li>
+            {% if log_list.has_previous %}
+            <li><a href="?page={{ log_list.previous_page_number }}">上一页</a></li>
+            {% endif %}
+
+            {% for pg in log_list.paginator.page_range %}
+            {% circle_page log_list.number pg log_list.paginator.num_pages %}
+            {% endfor %}
+
+            {% if log_list.has_next %}
+            <li><a href="?page={{ log_list.next_page_number }}">下一页</a></li>
+            {% endif %}
+            <li><a href="?page={{ log_list.paginator.num_pages }}">&raquo;</a></li>
+
+
+            <input class="form-control input" style="width: 70px;margin-left: -10px;"
+            type="text" min="1" max="{{ log_list.paginator.num_pages }}" id="pageindex" name="pageindex" placeholder="页码"/>
+            <input class="btn btn-default" type="button" onclick="openPage()" value="GO" />
+        </ul>
+
+    </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>日志</h1>
+        </div>
+
+            <ul class="timeline" id="timeline">
+            {% for log in log_list %}
+                {% if forloop.counter|divisibleby:"2" %}
+                <li class="timeline-inverted">
+                {% else %}
+                <li>
+                {% endif %}
+
+            <div class="timeline-badge success" st><span><i class="fa fa-comment-o"></i></span></div>
+            <div class="timeline-panel">
+                <div class="timeline-heading">
+                    <h3 class="timeline-title text-info" >{{ log.title }}</h3>
+                    <p class="mb-1">
+                        <span class="text-muted"> {{ log.pub_date }}</span>
+                    </p>
+                </div>
+                <div class="timeline-body">
+
+                    <ul style="font-size:17px;">
+
+                    {{ log.desc|linebreaksbr }}
+
+                    </ul>
+                </div>
+            </div>
+        </li>
+        {% endfor %}
+        </ul>
+    </div>
+
+</div>
+{% endblock %}
